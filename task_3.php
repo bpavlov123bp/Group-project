@@ -23,6 +23,7 @@ function calendar($date, $flag, $days_from_prev_month){
         $day_in_month = date('t', $first_day);
         $last_day = mktime(0, 0, 0, $month + 1, 0, $year);
         $first_day_position = date('w', $first_day);
+        $last_day_position = date('w', $last_day);
         $row = 1;
         switch(date('m', $time)){
             case 1:
@@ -86,10 +87,34 @@ function calendar($date, $flag, $days_from_prev_month){
             } else  {
                 echo "($day)\t";
             }
-        }
-        while(($day + $first_day_position) <= $row * 7){
-            echo "\t";
-            $day++;
+        } if($days_from_prev_month){
+            $position_to_add = 0;
+            switch($last_day_position){
+                case 1:
+                    $position_to_add = 7;
+                    break;
+                case 2:
+                    $position_to_add = 6;
+                    break;    
+                case 3:
+                    $position_to_add = 5;
+                    break;
+                case 4:
+                    $position_to_add = 4;
+                    break;
+                case 5:
+                    $position_to_add = 3;
+                    break;        
+                case 6:
+                    $position_to_add = 2;
+                    break;
+                case 7:
+                    $position_to_add = 1;
+                    break;     
+            }
+            for($q = 1; $q < $position_to_add; $q++){
+                echo date('j', strtotime("+$q day", $last_day)) . "\t";
+            }
         }
         echo "\n";
         } else if($flag == 2) {
@@ -102,6 +127,7 @@ function calendar($date, $flag, $days_from_prev_month){
             $day_in_month = date('t', $first_day);
             $last_day = mktime(0, 0, 0, $month + 1, 0, $year);
             $first_day_position = date('w', $first_day);
+            $last_day_position = date('w', $last_day);
             $row = 1;
             switch(date('m', $time)){
                 case 1:
@@ -166,14 +192,40 @@ function calendar($date, $flag, $days_from_prev_month){
                 }
                 
             }
-            while(($day + $first_day_position) <= $row * 7){
-                echo "\t";
-                $day++;
+            //echo $last_day_position;
+            if($days_from_prev_month){
+                $position_to_add = 0;
+                switch($last_day_position){
+                    case 0:
+                        $position_to_add = 7;
+                        break;
+                    case 1:
+                        $position_to_add = 6;
+                        break;    
+                    case 2:
+                        $position_to_add = 5;
+                        break;
+                    case 3:
+                        $position_to_add = 4;
+                        break;
+                    case 4:
+                        $position_to_add = 3;
+                        break;        
+                    case 5:
+                        $position_to_add = 2;
+                        break;
+                    case 6:
+                        $position_to_add = 1;
+                        break;     
+                }
+                for($q = 1; $q < $position_to_add; $q++){
+                    echo date('j', strtotime("+$q day", $last_day)) . "\t";
+                }
             }
             echo "\n";
         }
         
     }
-    calendar('04-03-2023', 1, true);
+    calendar('04-02-2020', 1, true);
     echo "\n\n";
-    calendar('23-03-2023', 2, false);
+    calendar('23-02-2020', 2, true);
